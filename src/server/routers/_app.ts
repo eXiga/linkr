@@ -1,18 +1,30 @@
 import { z } from "zod";
+import { prisma } from "../prisma";
+
 import { procedure, router } from "../trpc";
 
-// for now it will be basic hello world to check if everything is fine
 export const appRouter = router({
-  hello: procedure
+  links: procedure
     .input(
-      z.object({
-        text: z.string(),
-      })
+      z
+        .object({
+          priority: z.number(),
+        })
+        .optional()
     )
-    .query(({ input }) => {
-      return {
-        greeting: `Hello, ${input.text}`,
-      };
+    .query(async ({ input }) => {
+      return await prisma.links.findMany({
+        where: {
+          priority: {
+            equals: input?.priority,
+          },
+        },
+        orderBy: [
+          {
+            created_at: "asc",
+          },
+        ],
+      });
     }),
 });
 
