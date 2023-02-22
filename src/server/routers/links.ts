@@ -28,9 +28,24 @@ export const linksRouter = router({
     return await prisma.links.findMany({
       orderBy: [
         {
-          created_at: "asc",
+          created_at: "desc",
         },
       ],
     });
   }),
+  create: procedure
+    .input(
+      z.object({
+        title: z.string(),
+        url: z.string().url(),
+        priority: z.number().min(1).max(3),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const link = await prisma.links.create({
+        data: input,
+      });
+
+      return link;
+    }),
 });
