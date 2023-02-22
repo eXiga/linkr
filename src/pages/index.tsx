@@ -1,15 +1,19 @@
 import { trpc } from "@/utils/trpc";
 
 export default function Home() {
-  const hello = trpc.hello.useQuery({ text: "world" });
+  const links = trpc.links.getAll.useQuery();
 
-  if (!hello.data) {
+  if (!links.data) {
     return <div>Loading</div>;
   }
 
   return (
     <div>
-      <p>{hello.data.greeting}</p>
+      {links.data.map((l) => (
+        <p key={l.id}>
+          {l.title}: {l.url}
+        </p>
+      ))}
     </div>
   );
 }
