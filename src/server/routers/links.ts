@@ -48,4 +48,23 @@ export const linksRouter = router({
 
       return link;
     }),
+  updatePriority: procedure
+    .input(
+      z.object({
+        id: z.number(),
+        priority: z.number().min(1).max(3),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const link = await prisma.links.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          priority: input.priority,
+        },
+      });
+
+      return link;
+    }),
 });
