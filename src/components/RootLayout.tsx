@@ -2,9 +2,9 @@ import Head from "next/head";
 import { ReactNode } from "react";
 import Menu from "./Menu";
 
-type DefaultLayoutProps = { children: ReactNode };
+type RootLayoutProps = { children: ReactNode };
 
-export default function DefaultLayout({ children }: DefaultLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <Head>
