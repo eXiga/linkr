@@ -33,6 +33,23 @@ export const linksRouter = router({
       ],
     });
   }),
+  getCount: procedure.query(async () => {
+    const countedByPriority = await prisma.links.groupBy({
+      by: ["priority"],
+      _count: {
+        priority: true,
+      },
+      orderBy: {
+        priority: "asc",
+      },
+    });
+
+    const result = countedByPriority.map((element) => {
+      return { priority: element.priority, count: element._count.priority };
+    });
+
+    return result;
+  }),
   create: procedure
     .input(
       z.object({
