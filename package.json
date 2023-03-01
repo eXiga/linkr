@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "13.1.6",
+    "@next/font": "^13.1.6",
     "@prisma/client": "^4.9.0",
     "@tanstack/react-query": "^4.24.4",
     "@trpc/client": "^10.9.1",
