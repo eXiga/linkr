@@ -11,7 +11,7 @@ export const linksRouter = router({
       })
     )
     .query(async ({ input }) => {
-      return await prisma.links.findMany({
+      return await prisma.link.findMany({
         where: {
           priority: {
             equals: input?.priority,
@@ -25,7 +25,7 @@ export const linksRouter = router({
       });
     }),
   getAll: procedure.query(async () => {
-    return await prisma.links.findMany({
+    return await prisma.link.findMany({
       orderBy: [
         {
           created_at: "desc",
@@ -34,7 +34,7 @@ export const linksRouter = router({
     });
   }),
   getCount: procedure.query(async () => {
-    const countedByPriority = await prisma.links.groupBy({
+    const countedByPriority = await prisma.link.groupBy({
       by: ["priority"],
       _count: {
         priority: true,
@@ -59,7 +59,7 @@ export const linksRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const link = await prisma.links.create({
+      const link = await prisma.link.create({
         data: input,
       });
 
@@ -73,7 +73,7 @@ export const linksRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const link = await prisma.links.update({
+      const link = await prisma.link.update({
         where: {
           id: input.id,
         },
