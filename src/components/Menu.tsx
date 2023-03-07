@@ -42,7 +42,9 @@ function HeaderSection() {
 }
 
 function PrioritySection() {
-  const badgesCount = trpc.links.getCount.useQuery();
+  const badgesCount = trpc.links.getCount.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="basis-2/5">
