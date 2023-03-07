@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { trpc } from "../utils/trpc";
+import { trpc } from "@/utils/trpc";
 
 interface MenuButtonProps {
   iconPath: string;
