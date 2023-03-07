@@ -1,12 +1,18 @@
-import { create } from "zustand";
+import { create, StateCreator } from "zustand";
 import { devtools } from "zustand/middleware";
+import { Link } from "@prisma/client";
 
-interface State {}
+interface State {
+  links: Link[];
+}
 
-const initialState: State = {};
+interface Actions {
+  setLinks(links: Link[]): void;
+}
 
-export const useStore = create<State>()(
+export const useStore = create<State & Actions>()(
   devtools((set) => ({
-    ...initialState,
+    links: [],
+    setLinks: (links) => set((state) => ({ ...state, links: links })),
   }))
 );
