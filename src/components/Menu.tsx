@@ -42,7 +42,7 @@ function HeaderSection() {
 }
 
 function PrioritySection() {
-  const badgesCount = trpc.links.getCount.useQuery(undefined, {
+  const badgesCount = trpc.bookmarks.getCount.useQuery(undefined, {
     refetchOnWindowFocus: false,
   });
 

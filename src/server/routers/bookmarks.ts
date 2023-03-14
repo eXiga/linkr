@@ -3,8 +3,8 @@ import { prisma } from "../prisma";
 
 import { procedure, router } from "../trpc";
 
-export const linksRouter = router({
-  getById: procedure
+export const bookmarksRouter = router({
+  getByPriorityId: procedure
     .input(
       z.object({
         priority: z.number(),
@@ -59,11 +59,11 @@ export const linksRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const link = await prisma.link.create({
+      const bookmark = await prisma.link.create({
         data: input,
       });
 
-      return link;
+      return bookmark;
     }),
   updatePriority: procedure
     .input(
@@ -73,7 +73,7 @@ export const linksRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const link = await prisma.link.update({
+      const bookmark = await prisma.link.update({
         where: {
           id: input.id,
         },
@@ -82,6 +82,21 @@ export const linksRouter = router({
         },
       });
 
-      return link;
+      return bookmark;
+    }),
+  delete: procedure
+    .input(
+      z.object({
+        id: z.number(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const bookmark = await prisma.link.delete({
+        where: {
+          id: input.id,
+        },
+      });
+
+      return bookmark;
     }),
 });
