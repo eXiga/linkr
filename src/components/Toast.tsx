@@ -9,7 +9,7 @@ export default function Toast() {
     <div
       className={`${
         isToastVisible ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-300 fixed bottom-5 left-5 flex items-center w-full max-w-xs p-4 space-x-4 text-black bg-white divide-x divide-gray-200 rounded-lg`}
+      } transition-opacity duration-300 fixed bottom-5 left-7 flex items-center w-full max-w-xs p-4 space-x-4 text-black bg-white divide-x divide-gray-200 rounded-lg`}
       onClick={() => {
         hideToast();
       }}

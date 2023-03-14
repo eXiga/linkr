@@ -1,16 +1,21 @@
 import Image from "next/image";
 import { trpc } from "@/utils/trpc";
+import { useStore } from "@/utils/store";
 
 interface MenuButtonProps {
   iconPath: string;
   title: string;
   badgeCount: number;
   isLoading: boolean;
+  onClick: () => void;
 }
 
 function MenuButton(props: MenuButtonProps) {
   return (
-    <div className="flex flex-row gap-3 items-center justify-start pl-10">
+    <div
+      className="flex flex-row gap-3 items-center justify-start pl-10"
+      onClick={props.onClick}
+    >
       <Image src={props.iconPath} height={24} width={24} alt={props.title} />
       <p className="text-white text-lg truncate tracking-wide">{props.title}</p>
       {props.isLoading ? (
@@ -27,6 +32,8 @@ function MenuButton(props: MenuButtonProps) {
 }
 
 function HeaderSection() {
+  const setSelectedMode = useStore((state) => state.setSelectedMode);
+
   return (
     <div className="basis-1/5">
       <div className="pt-20">
@@ -35,6 +42,9 @@ function HeaderSection() {
           title="All bookmarks"
           badgeCount={0}
           isLoading={false}
+          onClick={() => {
+            setSelectedMode("All");
+          }}
         />
       </div>
     </div>
@@ -42,6 +52,8 @@ function HeaderSection() {
 }
 
 function PrioritySection() {
+  const setSelectedMode = useStore((state) => state.setSelectedMode);
+
   const badgesCount = trpc.bookmarks.getCount.useQuery(undefined, {
     refetchOnWindowFocus: false,
   });
@@ -55,18 +67,27 @@ function PrioritySection() {
           title="Read it ASAP"
           badgeCount={badgesCount.data ? badgesCount.data[0].count : 0}
           isLoading={badgesCount.isLoading}
+          onClick={() => {
+            setSelectedMode("Must");
+          }}
         />
         <MenuButton
           iconPath="/images/book.svg"
           title="Consider reading"
           badgeCount={badgesCount.data ? badgesCount.data[1].count : 0}
           isLoading={badgesCount.isLoading}
+          onClick={() => {
+            setSelectedMode("Consider");
+          }}
         />
         <MenuButton
           iconPath="/images/sleep.svg"
           title="If you have time"
           badgeCount={badgesCount.data ? badgesCount.data[2].count : 0}
           isLoading={badgesCount.isLoading}
+          onClick={() => {
+            setSelectedMode("Later");
+          }}
         />
       </div>
     </div>
