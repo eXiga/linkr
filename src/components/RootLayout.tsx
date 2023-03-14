@@ -2,6 +2,7 @@ import Head from "next/head";
 import { ReactNode } from "react";
 import { Raleway } from "@next/font/google";
 import Menu from "./Menu";
+import Toast from "@/components/Toast";
 
 const raleway = Raleway({
   weight: "400",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       >
         <div className="h-full basis-1/4">
           <Menu />
+          <Toast />
         </div>
         <div className="h-full basis-3/4 pt-4 pr-4 pb-4">{children}</div>
       </main>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useStore } from "@/utils/store";
 
 interface BookmarkProps {
   title: string;
@@ -23,6 +24,17 @@ function BookmarkActionButton(props: BookmarkActionButtonProps) {
 }
 
 export default function Bookmark(props: BookmarkProps) {
+  const showToast = useStore((state) => state.showToast);
+  const hideToast = useStore((state) => state.hideToast);
+
+  const onShareButtonClick = async () => {
+    showToast("Link copied to clipboard.");
+    await navigator.clipboard.writeText(props.url);
+    setTimeout(() => {
+      hideToast();
+    }, 2000);
+  };
+
   return (
     <div className="flex flex-row items-center justify-between pt-10 pr-10">
       <div className="flex flex-col items-start justify-center pl-10">
@@ -42,9 +54,7 @@ export default function Bookmark(props: BookmarkProps) {
         <BookmarkActionButton
           imagePath="images/share.svg"
           alt="Share"
-          onClick={async () => {
-            await navigator.clipboard.writeText(props.url);
-          }}
+          onClick={onShareButtonClick}
         />
         <BookmarkActionButton
           imagePath="images/delete.svg"
