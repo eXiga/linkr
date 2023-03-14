@@ -13,10 +13,10 @@ export default function Home() {
   return (
     <div className="h-full rounded-3xl bg-white">
       <ul>
-        {bookmarks.data.map((link) => {
+        {bookmarks.data.map((bookmark) => {
           return (
-            <li key={link.id}>
-              <Bookmark title={link.title} url={link.url} />
+            <li key={bookmark.id}>
+              <Bookmark title={bookmark.title} url={bookmark.url} />
             </li>
           );
         })}

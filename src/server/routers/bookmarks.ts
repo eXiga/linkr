@@ -11,7 +11,7 @@ export const bookmarksRouter = router({
       })
     )
     .query(async ({ input }) => {
-      return await prisma.link.findMany({
+      return await prisma.bookmark.findMany({
         where: {
           priority: {
             equals: input?.priority,
@@ -25,7 +25,7 @@ export const bookmarksRouter = router({
       });
     }),
   getAll: procedure.query(async () => {
-    return await prisma.link.findMany({
+    return await prisma.bookmark.findMany({
       orderBy: [
         {
           created_at: "desc",
@@ -34,7 +34,7 @@ export const bookmarksRouter = router({
     });
   }),
   getCount: procedure.query(async () => {
-    const countedByPriority = await prisma.link.groupBy({
+    const countedByPriority = await prisma.bookmark.groupBy({
       by: ["priority"],
       _count: {
         priority: true,
@@ -59,7 +59,7 @@ export const bookmarksRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const bookmark = await prisma.link.create({
+      const bookmark = await prisma.bookmark.create({
         data: input,
       });
 
@@ -73,7 +73,7 @@ export const bookmarksRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const bookmark = await prisma.link.update({
+      const bookmark = await prisma.bookmark.update({
         where: {
           id: input.id,
         },
@@ -91,7 +91,7 @@ export const bookmarksRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const bookmark = await prisma.link.delete({
+      const bookmark = await prisma.bookmark.delete({
         where: {
           id: input.id,
         },
