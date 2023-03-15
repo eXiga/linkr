@@ -51,8 +51,7 @@ export default function Bookmark(props: BookmarkProps) {
           {props.url.replace("https://", "")}
         </p>
       </div>
-      {
-        props.actionsAvailable &&
+      {props.actionsAvailable && (
         <div className="flex flex-row gap-10">
           <BookmarkActionButton
             imagePath="images/share.svg"
@@ -62,15 +61,15 @@ export default function Bookmark(props: BookmarkProps) {
           <BookmarkActionButton
             imagePath="images/delete.svg"
             alt="Delete"
-            onClick={() => { }}
+            onClick={() => {}}
           />
           <BookmarkActionButton
             imagePath="images/dots.svg"
             alt="Menu"
-            onClick={() => { }}
+            onClick={() => {}}
           />
         </div>
-      }
+      )}
     </div>
   );
 }

@@ -45,7 +45,11 @@ export default function BookmarkList() {
         {bookmarks.data.map((bookmark) => {
           return (
             <li key={bookmark.id}>
-              <Bookmark title={bookmark.title} url={bookmark.url} actionsAvailable={true} />
+              <Bookmark
+                title={bookmark.title}
+                url={bookmark.url}
+                actionsAvailable={true}
+              />
             </li>
           );
         })}
