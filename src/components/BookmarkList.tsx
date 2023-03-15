@@ -32,7 +32,7 @@ export default function BookmarkList() {
       <div>
         <ul>
           <li>
-            <Bookmark title="Loading" url="Loading" />
+            <Bookmark title="Loading" url="Loading" actionsAvailable={false} />
           </li>
         </ul>
       </div>
@@ -45,7 +45,7 @@ export default function BookmarkList() {
         {bookmarks.data.map((bookmark) => {
           return (
             <li key={bookmark.id}>
-              <Bookmark title={bookmark.title} url={bookmark.url} />
+              <Bookmark title={bookmark.title} url={bookmark.url} actionsAvailable={true} />
             </li>
           );
         })}

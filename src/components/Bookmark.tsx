@@ -4,6 +4,7 @@ import { useStore } from "@/utils/store";
 interface BookmarkProps {
   title: string;
   url: string;
+  actionsAvailable: boolean;
 }
 
 interface BookmarkActionButtonProps {
@@ -50,23 +51,26 @@ export default function Bookmark(props: BookmarkProps) {
           {props.url.replace("https://", "")}
         </p>
       </div>
-      <div className="flex flex-row gap-10">
-        <BookmarkActionButton
-          imagePath="images/share.svg"
-          alt="Share"
-          onClick={onShareButtonClick}
-        />
-        <BookmarkActionButton
-          imagePath="images/delete.svg"
-          alt="Delete"
-          onClick={() => {}}
-        />
-        <BookmarkActionButton
-          imagePath="images/dots.svg"
-          alt="Menu"
-          onClick={() => {}}
-        />
-      </div>
+      {
+        props.actionsAvailable &&
+        <div className="flex flex-row gap-10">
+          <BookmarkActionButton
+            imagePath="images/share.svg"
+            alt="Share"
+            onClick={onShareButtonClick}
+          />
+          <BookmarkActionButton
+            imagePath="images/delete.svg"
+            alt="Delete"
+            onClick={() => { }}
+          />
+          <BookmarkActionButton
+            imagePath="images/dots.svg"
+            alt="Menu"
+            onClick={() => { }}
+          />
+        </div>
+      }
     </div>
   );
 }
