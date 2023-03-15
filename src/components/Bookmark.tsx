@@ -52,6 +52,10 @@ export default function Bookmark(props: BookmarkProps) {
 
   const onDeleteButtonClick = (id: number) => {
     deleteBookmark.mutate({ id: id });
+    showToast("Bookmark was deleted.");
+    setTimeout(() => {
+      hideToast();
+    }, 2000);
   };
 
   return (
