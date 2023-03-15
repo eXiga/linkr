@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 const SelectedModes = ["All", "Must", "Consider", "Later"] as const;
-type SelectedMode = typeof SelectedModes[number];
+export type SelectedMode = typeof SelectedModes[number];
 
 interface State {
   isToastVisible: boolean;
