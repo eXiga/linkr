@@ -7,6 +7,7 @@ interface MenuButtonProps {
   title: string;
   badgeCount: number;
   isLoading: boolean;
+  isSelected: boolean;
   onClick: () => void;
 }
 
@@ -17,7 +18,13 @@ function MenuButton(props: MenuButtonProps) {
       onClick={props.onClick}
     >
       <Image src={props.iconPath} height={24} width={24} alt={props.title} />
-      <p className="text-white text-lg truncate tracking-wide">{props.title}</p>
+      <p
+        className={`text-lg truncate tracking-wide ${
+          props.isSelected ? "text-[#3caaa1]" : "text-white"
+        } hover:underline underline-offset-4 decoration-[#3caaa1]`}
+      >
+        {props.title}
+      </p>
       {props.isLoading ? (
         <div className="w-6 h-6 ml-auto mr-10 rounded-full bg-gradient-to-tr from-[#3caaa1] to-[#c2f5ff] animate-spin" />
       ) : (
@@ -33,6 +40,7 @@ function MenuButton(props: MenuButtonProps) {
 
 function HeaderSection() {
   const setSelectedMode = useStore((state) => state.setSelectedMode);
+  const selectedMode = useStore((state) => state.selectedMode);
 
   return (
     <div className="basis-1/5">
@@ -42,6 +50,7 @@ function HeaderSection() {
           title="All bookmarks"
           badgeCount={0}
           isLoading={false}
+          isSelected={selectedMode === "All"}
           onClick={() => {
             setSelectedMode("All");
           }}
@@ -53,6 +62,7 @@ function HeaderSection() {
 
 function PrioritySection() {
   const setSelectedMode = useStore((state) => state.setSelectedMode);
+  const selectedMode = useStore((state) => state.selectedMode);
 
   const badgesCount = trpc.bookmarks.getCount.useQuery(undefined, {
     refetchOnWindowFocus: false,
@@ -67,6 +77,7 @@ function PrioritySection() {
           title="Read it ASAP"
           badgeCount={badgesCount.data ? badgesCount.data[0].count : 0}
           isLoading={badgesCount.isLoading}
+          isSelected={selectedMode === "Must"}
           onClick={() => {
             setSelectedMode("Must");
           }}
@@ -76,6 +87,7 @@ function PrioritySection() {
           title="Consider reading"
           badgeCount={badgesCount.data ? badgesCount.data[1].count : 0}
           isLoading={badgesCount.isLoading}
+          isSelected={selectedMode === "Consider"}
           onClick={() => {
             setSelectedMode("Consider");
           }}
@@ -85,6 +97,7 @@ function PrioritySection() {
           title="If you have time"
           badgeCount={badgesCount.data ? badgesCount.data[2].count : 0}
           isLoading={badgesCount.isLoading}
+          isSelected={selectedMode === "Later"}
           onClick={() => {
             setSelectedMode("Later");
           }}
