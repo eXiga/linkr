@@ -32,7 +32,13 @@ export default function BookmarkList() {
       <div>
         <ul>
           <li>
-            <Bookmark title="Loading" url="Loading" actionsAvailable={false} />
+            <Bookmark
+              id={-1}
+              priorityId={-1}
+              title="Loading"
+              url="Loading"
+              actionsAvailable={false}
+            />
           </li>
         </ul>
       </div>
@@ -46,6 +52,8 @@ export default function BookmarkList() {
           return (
             <li key={bookmark.id}>
               <Bookmark
+                id={bookmark.id}
+                priorityId={bookmark.priority}
                 title={bookmark.title}
                 url={bookmark.url}
                 actionsAvailable={true}

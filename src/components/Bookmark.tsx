@@ -1,7 +1,10 @@
 import Image from "next/image";
+import { trpc } from "@/utils/trpc";
 import { useStore } from "@/utils/store";
 
 interface BookmarkProps {
+  id: number;
+  priorityId: number;
   title: string;
   url: string;
   actionsAvailable: boolean;
@@ -28,12 +31,27 @@ export default function Bookmark(props: BookmarkProps) {
   const showToast = useStore((state) => state.showToast);
   const hideToast = useStore((state) => state.hideToast);
 
+  const utils = trpc.useContext();
+  const deleteBookmark = trpc.bookmarks.delete.useMutation({
+    onSuccess() {
+      utils.bookmarks.getAll.invalidate();
+      utils.bookmarks.getCount.invalidate();
+      utils.bookmarks.getByPriorityId.invalidate({
+        priority: props.priorityId,
+      });
+    },
+  });
+
   const onShareButtonClick = async () => {
     showToast("Link copied to clipboard.");
     await navigator.clipboard.writeText(props.url);
     setTimeout(() => {
       hideToast();
     }, 2000);
+  };
+
+  const onDeleteButtonClick = (id: number) => {
+    deleteBookmark.mutate({ id: id });
   };
 
   return (
@@ -61,12 +79,14 @@ export default function Bookmark(props: BookmarkProps) {
           <BookmarkActionButton
             imagePath="images/delete.svg"
             alt="Delete"
-            onClick={() => {}}
+            onClick={() => {
+              onDeleteButtonClick(props.id);
+            }}
           />
           <BookmarkActionButton
             imagePath="images/dots.svg"
             alt="Menu"
-            onClick={() => {}}
+            onClick={() => { }}
           />
         </div>
       )}
