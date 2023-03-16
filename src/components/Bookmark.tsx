@@ -28,7 +28,6 @@ export default function Bookmark(props: BookmarkProps) {
 
   const updatePriority = trpc.bookmarks.updatePriority.useMutation({
     onSuccess() {
-      // TODO: I'm not sure how to pass _next_ priority id here, think later about it
       utils.bookmarks.getCount.invalidate();
       utils.bookmarks.getByPriorityId.invalidate({
         priority: props.priorityId,
