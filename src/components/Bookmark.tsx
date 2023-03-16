@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import Image from "next/image";
 import { trpc } from "@/utils/trpc";
 import { useStore } from "@/utils/store";
 
-import Modal from "@/components/Modal";
+import BookmarkActionButton from "@/components/BookmarkActionButton";
 
 interface BookmarkProps {
   id: number;
@@ -11,45 +9,6 @@ interface BookmarkProps {
   title: string;
   url: string;
   actionsAvailable: boolean;
-}
-
-interface BookmarkActionButtonProps {
-  imagePath: string;
-  alt: string;
-  shouldAskForConfirmation: boolean;
-  onClick: () => void;
-}
-
-function BookmarkActionButton(props: BookmarkActionButtonProps) {
-  const [isModalOpened, setModalOpened] = useState(false);
-
-  const onClick = () => {
-    props.shouldAskForConfirmation ? setModalOpened(true) : props.onClick();
-  };
-
-  return (
-    <>
-      <button
-        type="button"
-        className="rounded-xl cursor-pointer hover:bg-slate-100 active:bg-slate-200"
-        onClick={onClick}
-      >
-        <Image src={props.imagePath} height={24} width={24} alt={props.alt} />
-      </button>
-      {props.shouldAskForConfirmation && (
-        <Modal
-          title="Delete this bookmark?"
-          buttonTitle="Delete"
-          isOpened={isModalOpened}
-          onClose={() => setModalOpened(false)}
-          onConfirm={() => {
-            setModalOpened(false);
-            props.onClick();
-          }}
-        />
-      )}
-    </>
-  );
 }
 
 export default function Bookmark(props: BookmarkProps) {
@@ -60,6 +19,16 @@ export default function Bookmark(props: BookmarkProps) {
   const deleteBookmark = trpc.bookmarks.delete.useMutation({
     onSuccess() {
       utils.bookmarks.getAll.invalidate();
+      utils.bookmarks.getCount.invalidate();
+      utils.bookmarks.getByPriorityId.invalidate({
+        priority: props.priorityId,
+      });
+    },
+  });
+
+  const updatePriority = trpc.bookmarks.updatePriority.useMutation({
+    onSuccess() {
+      // TODO: I'm not sure how to pass _next_ priority id here, think later about it
       utils.bookmarks.getCount.invalidate();
       utils.bookmarks.getByPriorityId.invalidate({
         priority: props.priorityId,
@@ -83,6 +52,19 @@ export default function Bookmark(props: BookmarkProps) {
     }, 2000);
   };
 
+  const onUpdatePriorityClick = (bookmarkId: number, priorityId: number) => {
+    updatePriority.mutate(
+      { id: bookmarkId, priority: priorityId },
+      {
+        onSuccess() {
+          utils.bookmarks.getByPriorityId.invalidate({
+            priority: priorityId,
+          });
+        },
+      }
+    );
+  };
+
   return (
     <div className="flex flex-row items-center justify-between pt-10 pr-10">
       <div className="flex flex-col items-start justify-center pl-10">
@@ -101,24 +83,32 @@ export default function Bookmark(props: BookmarkProps) {
       {props.actionsAvailable && (
         <div className="flex flex-row gap-10">
           <BookmarkActionButton
+            priorityId={props.priorityId}
             imagePath="images/share.svg"
             alt="Share"
             shouldAskForConfirmation={false}
+            shouldShowMenu={false}
             onClick={onShareButtonClick}
           />
           <BookmarkActionButton
+            priorityId={props.priorityId}
             imagePath="images/delete.svg"
             alt="Delete"
             shouldAskForConfirmation={true}
+            shouldShowMenu={false}
             onClick={() => {
               onDeleteButtonClick(props.id);
             }}
           />
           <BookmarkActionButton
+            priorityId={props.priorityId}
             imagePath="images/dots.svg"
             alt="Menu"
             shouldAskForConfirmation={false}
-            onClick={() => {}}
+            shouldShowMenu={true}
+            onClick={(priorityId) => {
+              onUpdatePriorityClick(props.id, priorityId);
+            }}
           />
         </div>
       )}
