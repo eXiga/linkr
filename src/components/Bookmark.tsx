@@ -1,6 +1,9 @@
+import React, { useState } from "react";
 import Image from "next/image";
 import { trpc } from "@/utils/trpc";
 import { useStore } from "@/utils/store";
+
+import Modal from "@/components/Modal";
 
 interface BookmarkProps {
   id: number;
@@ -13,18 +16,39 @@ interface BookmarkProps {
 interface BookmarkActionButtonProps {
   imagePath: string;
   alt: string;
+  shouldAskForConfirmation: boolean;
   onClick: () => void;
 }
 
 function BookmarkActionButton(props: BookmarkActionButtonProps) {
+  const [isModalOpened, setModalOpened] = useState(false);
+
+  const onClick = () => {
+    props.shouldAskForConfirmation ? setModalOpened(true) : props.onClick();
+  };
+
   return (
-    <button
-      type="button"
-      className="rounded-xl cursor-pointer hover:bg-slate-100 active:bg-slate-200"
-      onClick={props.onClick}
-    >
-      <Image src={props.imagePath} height={24} width={24} alt={props.alt} />
-    </button>
+    <>
+      <button
+        type="button"
+        className="rounded-xl cursor-pointer hover:bg-slate-100 active:bg-slate-200"
+        onClick={onClick}
+      >
+        <Image src={props.imagePath} height={24} width={24} alt={props.alt} />
+      </button>
+      {props.shouldAskForConfirmation && (
+        <Modal
+          title="Delete this bookmark?"
+          buttonTitle="Delete"
+          isOpened={isModalOpened}
+          onClose={() => setModalOpened(false)}
+          onConfirm={() => {
+            setModalOpened(false);
+            props.onClick();
+          }}
+        />
+      )}
+    </>
   );
 }
 
@@ -79,11 +103,13 @@ export default function Bookmark(props: BookmarkProps) {
           <BookmarkActionButton
             imagePath="images/share.svg"
             alt="Share"
+            shouldAskForConfirmation={false}
             onClick={onShareButtonClick}
           />
           <BookmarkActionButton
             imagePath="images/delete.svg"
             alt="Delete"
+            shouldAskForConfirmation={true}
             onClick={() => {
               onDeleteButtonClick(props.id);
             }}
@@ -91,7 +117,8 @@ export default function Bookmark(props: BookmarkProps) {
           <BookmarkActionButton
             imagePath="images/dots.svg"
             alt="Menu"
-            onClick={() => { }}
+            shouldAskForConfirmation={false}
+            onClick={() => {}}
           />
         </div>
       )}

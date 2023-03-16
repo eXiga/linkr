@@ -25,6 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Toast />
         </div>
         <div className="h-full basis-3/4 pt-4 pr-4 pb-4">{children}</div>
+        <div id="modal"></div>
       </main>
     </>
   );
