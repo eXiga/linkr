@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 interface ModalProps {
   title: string;
   buttonTitle: string;
-  isOpened: boolean;
+  isVisible: boolean;
   onClose: () => void;
   onConfirm: () => void;
 }
 export default function Modal(props: ModalProps) {
-  if (!props.isOpened) return <></>;
+  if (!props.isVisible) return <></>;
 
   const modalDiv = document.getElementById("modal");
 
@@ -20,7 +20,7 @@ export default function Modal(props: ModalProps) {
         <p className="font-bold">{props.title}</p>
         <div className="flex flex-row justify-end gap-10">
           <button
-            className="px-3 rounded-full hover:bg-slate-300"
+            className="px-3 rounded-full hover:bg-slate-100 active:bg-slate-300"
             onClick={props.onClose}
           >
             Close
