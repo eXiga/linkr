@@ -6,10 +6,10 @@ export default function Toast() {
   const hideToast = useStore((state) => state.hideToast);
 
   return (
-    <div
-      className={`${
-        isToastVisible ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-300 fixed bottom-5 left-7 flex items-center w-full max-w-xs p-4 space-x-4 text-black bg-white divide-x divide-gray-200 rounded-lg`}
+    <button
+      type="button"
+      className={`${isToastVisible ? "opacity-100" : "opacity-0"
+        } transition-opacity duration-300 fixed bottom-5 left-7 flex items-center w-full max-w-xs p-4 space-x-4 text-black bg-white divide-x divide-gray-200 rounded-lg`}
       onClick={() => {
         hideToast();
       }}
@@ -29,6 +29,6 @@ export default function Toast() {
         />
       </svg>
       <div className="pl-4 text-sm font-normal">{toastMessage}</div>
-    </div>
+    </button>
   );
 }

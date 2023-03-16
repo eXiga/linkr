@@ -18,12 +18,13 @@ interface BookmarkActionButtonProps {
 
 function BookmarkActionButton(props: BookmarkActionButtonProps) {
   return (
-    <a
+    <button
+      type="button"
       className="rounded-xl cursor-pointer hover:bg-slate-100 active:bg-slate-200"
       onClick={props.onClick}
     >
       <Image src={props.imagePath} height={24} width={24} alt={props.alt} />
-    </a>
+    </button>
   );
 }
 

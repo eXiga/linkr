@@ -13,15 +13,15 @@ interface MenuButtonProps {
 
 function MenuButton(props: MenuButtonProps) {
   return (
-    <div
+    <button
+      type="button"
       className="flex flex-row gap-3 items-center justify-start pl-10"
       onClick={props.onClick}
     >
       <Image src={props.iconPath} height={24} width={24} alt={props.title} />
       <p
-        className={`text-lg truncate tracking-wide ${
-          props.isSelected ? "text-[#3caaa1]" : "text-white"
-        } hover:underline underline-offset-4 decoration-[#3caaa1]`}
+        className={`text-lg truncate tracking-wide ${props.isSelected ? "text-[#3caaa1]" : "text-white"
+          } hover:underline underline-offset-4 decoration-[#3caaa1]`}
       >
         {props.title}
       </p>
@@ -34,7 +34,7 @@ function MenuButton(props: MenuButtonProps) {
           </div>
         )
       )}
-    </div>
+    </button>
   );
 }
 
