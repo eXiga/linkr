@@ -65,7 +65,7 @@ export default function Bookmark(props: BookmarkProps) {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between pt-10 pr-10">
+    <div className="flex flex-row items-center justify-between mt-10 pr-10 hover:bg-slate-100">
       <div className="flex flex-col items-start justify-center pl-10">
         <a
           href={props.url}
