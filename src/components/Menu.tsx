@@ -20,8 +20,9 @@ function MenuButton(props: MenuButtonProps) {
     >
       <Image src={props.iconPath} height={24} width={24} alt={props.title} />
       <p
-        className={`text-lg truncate tracking-wide ${props.isSelected ? "text-[#3caaa1]" : "text-white"
-          } hover:underline underline-offset-4 decoration-[#3caaa1]`}
+        className={`text-lg truncate tracking-wide ${
+          props.isSelected ? "text-[#3caaa1]" : "text-white"
+        } hover:underline underline-offset-4 decoration-[#3caaa1]`}
       >
         {props.title}
       </p>
@@ -71,7 +72,7 @@ function PrioritySection() {
   return (
     <div className="basis-2/5">
       <div className="flex flex-col gap-5">
-        <p className=" pl-7 text-slate-500 tracking-wider">Reading priority</p>
+        <p className="pl-7 text-slate-500 tracking-wider">Reading priority</p>
         <MenuButton
           iconPath="/images/flame.svg"
           title="Read it ASAP"
@@ -109,7 +110,20 @@ function PrioritySection() {
 
 // under construction, will add functionality later
 function OtherSection() {
-  return <div className="basis-2/5"></div>;
+  return (
+    <div className="basis-2/5">
+      <div className="flex flex-row justify-center ml-10 mr-10 rounded bg-[#3caaa1] hover:bg-[#2f847d] active:bg-[#28716b]">
+        <button
+          className="w-full text-white text-lg"
+          onClick={() => {
+            console.log("CLICK");
+          }}
+        >
+          Add new
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default function Menu() {
