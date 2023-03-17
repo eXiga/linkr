@@ -46,7 +46,7 @@ export default function BookmarkList() {
   }
 
   return (
-    <div>
+    <div className="h-full overflow-y-auto pb-5">
       <ul>
         {bookmarks.data.map((bookmark) => {
           return (

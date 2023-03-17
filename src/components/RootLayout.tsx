@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </Head>
 
       <main
-        className={`flex h-screen flex-row items-center bg-slate-900 ${raleway.className}`}
+        className={`flex overflow-hidden h-screen flex-row items-center bg-slate-900 ${raleway.className}`}
       >
         <div className="h-full basis-1/4">
           <Menu />
