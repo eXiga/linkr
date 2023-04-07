@@ -14,7 +14,7 @@ export default function Dropdown(props: DropdownProps) {
         {props.menuItems.map((item, index) => (
           <li key={index}>
             <button
-              className="px-3 rounded-full hover:bg-slate-100 active:bg-slate-300"
+              className="px-3 m-2 rounded-full hover:bg-slate-100 active:bg-slate-300"
               type="button"
               onClick={() => {
                 props.onItemSelected(item.priorityId);
